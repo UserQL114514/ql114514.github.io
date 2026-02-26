@@ -66,7 +66,16 @@
         padding: 8px;
         font-size: 14px;
       }
-      .out {
+      .outE {
+        background: #e6e6e6;
+        padding: 15px;
+        min-height: 120px;
+        white-space: pre-wrap;
+        font-family: monospace;
+        margin-top: 15px;
+        text-align: left;
+      }
+      .outD {
         background: #e6e6e6;
         padding: 15px;
         min-height: 120px;
@@ -322,7 +331,7 @@
             <h2>Encrypt</h2>
             <textarea id="textIn"></textarea><br>
             <button onclick="enc()">Encrypt</button>
-            <div class="out" id="cipherOut"></div>
+            <div class="outE" id="cipherOut"></div>
             <p>把加密后的文本发到我的邮箱，让我看看有多少人看过我的网站</p>
           </div>
           <script>
@@ -818,7 +827,7 @@
                             <h2>Decrypt</h2>
                             <textarea id="cipherIn" placeholder=""></textarea><br>
                             <button onclick="dec()">Decrypt</button>
-                            <div class="out" id="textOut"></div>
+                            <div class="outD" id="textOut"></div>
                           </div>
                           <script>
                           const p = 1000000000039n;
