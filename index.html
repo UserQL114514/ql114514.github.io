@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="echarts.js"></script>
+    <title>曲率QL的个人网页</title>
+    <style>
+      body {
+        margin: 0;
+      }
+      a{
+        text-decoration:none;
+      }
+      a:hover{
+        text-decoration:underline;
+      }
+      .chart-container {
+        width: 80%;
+        max-width: 700px;
+        background: #fff;
+        padding: 25px;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      }
+      .container{
+        width:100%;
+        height:auto;
+      }
+      #echart{
+        min-height:600px;
+      }
+      input{
+        background-color:#000;
+        color:#fff;
+      }
+      button{
+        background-color:#000;
+        color:#fff;
+      }
+      button:hover{
+        text-decoration:underline;
+      }
+      .private-content1 {
+        display: none;
+      }
+      .private-content2 {
+        display: none;
+      }
+      .private-content3 {
+        display: none;
+      }
+    </style>
+  </head>
+  <body style="background-color:#111;">
+    <header style="
+    align-items: center;
+    background-color:#000;
+    padding:15px;
+    font-size:15px;
+    color:#fff;
+    ">
+      <img src="https://i.imgs.ovh/2026/01/02/CiWEVL.png" alt="QL" width="100px" height="100px">
+      <h2 style="
+      text-align:left;
+      position:absolute;
+      top:30px;
+      left:120px;
+      ">曲率QL的个人网页</h2>
+      <nav style="
+      text-align:right;
+      font-size:25px;
+      position:absolute;
+      top:-10px;
+      right:15px;
+      ">
+        <p><strong>v3.2<br>第23版<br>1095 Line</strong></p>
+        ...
+      </nav>
+    </header>
+      <main>
+        <section class="Main" style="
+        background-color:#000;
+        margin:30px;
+        text-align:center;
+        padding:15px;
+        color:#fff;
+        font-size:20px;
+        border-radius:15px;
+        ">
+          <h1 style="
+          background-color:#000;
+          margin:30px;
+          text-align:center;
+          color:#fff;
+          font-size:40px;
+          ">主页</h1>
+          <h2><strong>关于我</strong></h2>
+          <h3><strong>个人简介</strong></h3>
+          <p>术力口厨 | 二次元 | 我的世界7年老玩家 | SCP | 某科学的超电磁炮<br />
+          <p>我的网名叫做曲率QL<br />
+          Minecraft/代码萌新<br />
+          关于这个名字，起源于四年级时起了个名字<br />
+          后来觉得太尴尬了，就起了个很装的英文名<br />
+          <!--Maugfy-->
+          到五年级的时候，又改成了Rainbow<br />
+          到六年级，又改成了曲率，后来完善了名字的全称，叫曲率QL</p>
+          <h4>推：初音miku、重音teto、夜步及、御坂美琴</h4>
+          <h3><strong>联系方式</strong></h3>
+          <p>QQ号：1241469177</p>
+          <h3>我的账号</h3>
+          <a style="
+          background-color:#000;
+          margin:30px;
+          text-align:center;
+          color:#fff;
+          font-size:20px;"
+          href="https://space.bilibili.com/3546832162523212">B站账号</a>
+          <br><a style="
+          background-color:#000;
+          margin:30px;
+          text-align:center;
+          color:#fff;
+          font-size:20px;"
+          href="https://luogu.com.cn/user/2044255">洛谷账号</a>
+          <br><a style="
+          background-color:#000;
+          margin:30px；
+          text-align:center;
+          color:#fff;
+          font-size:20px;"
+          href="https://music.163.com/#/user/home?id=10003989098">网易云账号</a><br>
+          <a style="
+          background-color:#000000;
+          margin:30px；
+          text-align:center;
+          color:#ffffff;
+          font-size:30px;"
+          href="https://www.bilibili.com/bangumi/play/ep84340">某科学的超电磁炮</a>
+          <p></p>
+        </section>
+        <section class="Music" style="
+        background-color:#000;
+        margin:30px;
+        text-align:center;
+        padding:15px;
+        color:#fff;
+        font-size:20px;
+        border-radius:15px;
+        ">
+          <h1>来听歌吧</h1>
+          <iframe frameborder="no"
+          marginwidth="0"
+          marginheight="0"
+          width="675"
+          height="450"
+          src="https://music.163.com/outchain/player?type=0&amp;id=17707539616&amp;auto=0&amp;height=450">
+          </iframe>
+          <iframe frameborder="no"
+          marginwidth="0"
+          marginheight="0"
+          width="675"
+          height="450"
+          src="https://music.163.com/outchain/player?type=0&amp;id=17707539398&amp;auto=0&amp;height=450">
+          </iframe>
+        </section>
+        <section class="Link" style="
+        background-color:#000;
+        margin:30px;
+        text-align:center;
+        padding:15px;
+        color:#fff;
+        font-size:20px;
+        border-radius:15px;
+        ">
+          <h2><strong>其他</strong></h2>
+          <br><a style="
+          background-color:#000000;
+          margin:30px；
+          text-align:center;
+          color:#ffffff;
+          font-size:20px;"
+          href="https://space.bilibili.com/3546968097818827">同学B站账号</a>
+          <h3><strong>好玩的链接</strong></h3>
+          <h4>Wiki</h4>
+          <a style="
+          background-color:#000;
+          margin:30px；
+          text-align:center;
+          color:#fff;
+          font-size:20px;"
+          href="https://zh.minecraft.wiki">我的世界官方维基</a>
+          <br><a style="
+          background-color:#000;
+          margin:30px；
+          text-align:center;
+          color:#fff;
+          font-size:20px;"
+          href="https://scp-wiki-cn.wikidot.com">SCP中文维基</a>
+          <br><a style="
+          background-color:#000;
+          margin:30px；
+          text-align:center;
+          color:#fff;
+          font-size:20px;"
+          href="https://backrooms-wiki-cn.wikidot.com">后室中文维基</a>
+          <h4>一些官网</h4>
+          <a style="
+          background-color:#000;
+          margin:30px；
+          text-align:center;
+          color:#fff;
+          font-size:20px;"
+          href="https://kasaneteto.jp">重音テト官网</a>
+          <br><a style="
+          background-color:#000;
+          margin:30px；
+          text-align:center;
+          color:#fff;
+          font-size:20px;"
+          href="https://piapro.net">Piapro官网</a>
+          <br><a style="
+          background-color:#000;
+          margin:30px；
+          text-align:center;
+          color:#fff;
+          font-size:20px;"
+          href="https://voicemith.com">VOICEMITH官网</a>
+          <br><a style="
+          background-color:#000;
+          margin:30px；
+          text-align:center;
+          color:#fff;
+          font-size:20px;"
+          href="https://minecraft.net">我的世界官网</a>
+          <br><a style="
+          background-color:#000;
+          margin:30px；
+          text-align:center;
+          color:#fff;
+          font-size:20px;"
+          href="https://srpn.top">星球阁官网</a>
+          <br><a style="
+          background-color:#000;
+          margin:30px；
+          text-align:center;
+          color:#fff;
+          font-size:20px;"
+          href="https://qhlg.flime.top">乾狐之家</a>
+          <br><a style="
+          background-color:#000;
+          margin:30px；
+          text-align:center;
+          color:#fff;
+          font-size:20px;"
+          href="https://danieltoyama.fun">户山兔兔の小家</a>
+          <br><a style="
+          background-color:#000;
+          margin:30px；
+          text-align:center;
+          color:#fff;
+          font-size:20px;"
+          href="https://rthmiho.top">猫雨音の小猫窝</a>
+          <h4>杂物</h4>
+          <a style="
+          background-color:#000;
+          margin:30px；
+          text-align:center;
+          color:#fff;
+          font-size:20px;"
+          href="https://api.lolimi.cn/60">每日60秒（新闻）</a>
+          <br><a style="
+          background-color:#00;
+          margin:30px；
+          text-align:center;
+          color:#fff;
+          font-size:20px;"
+          href="https://gityx.com">git游戏</a>
+          <br><a style="
+          background-color:#000;
+          margin:30px；
+          text-align:center;
+          color:#fff;
+          font-size:20px;"
+          href="https://play.mc.js.cool/1.8">我的世界1.8</a>
+          <p></p>
+        </section>
+        <section class="RSA" style="
+          background-color:#000;
+          margin:30px;
+          text-align:center;
+          padding:15px;
+          color:#fff;
+          font-size:20px;
+          border-radius:15px;
+          ">
+          <div class="box">
+            <h2>Encrypt</h2>
+            <textarea id="textIn"></textarea><br>
+            <button onclick="enc()">Encrypt</button>
+            <div class="out" id="cipherOut"></div>
+            <p>把加密后的文本发到我的邮箱，让我看看有多少人看过我的网站</p>
+          </div>
+          <script>
+          const p = 1000000000039n;
+          const q = 1000000000061n;
+          const e = 65537n;
+          const n = p * q;
+          const phi = (p-1n)*(q-1n);
+          const d = modInv(e, phi);
+          function modInv(a, m) {
+            let m0 = m, y = 0n, x = 1n;
+            if (m === 1n) return 0n;
+            while (a > 1n) {
+              let q = a / m;
+              let t = m; m = a % m; a = t; t = y;
+              y = x - q * y; x = t;
+            }
+            return x < 0n ? x + m0 : x;
+          }
+          function powm(b, e, mod) {
+            let r = 1n;
+            b = b % mod;
+            while (e > 0n) {
+              if (e & 1n) r = (r * b) % mod;
+              e >>= 1n;
+              b = (b * b) % mod;
+            }
+            return r;
+          }
+          function encBlock(str) {
+            let parts = [];
+            for (let c of str) {
+              let code = c.charCodeAt(0);
+              parts.push(code.toString().padStart(6, '0'));
+            }
+            return BigInt(parts.join(''));
+          }
+          function enc() {
+            let txt = document.getElementById('textIn').value;
+            let blocks = [];
+            for (let i = 0; i < txt.length; i += 4) {
+              let chunk = txt.slice(i, i+4);
+              blocks.push(encBlock(chunk));
+            }
+            let ciphers = blocks.map(m => powm(m, e, n).toString());
+            document.getElementById('cipherOut').textContent = ciphers.join('\n');
+          }
+          </script>
+        </section>
+        <section class="Tips" style="
+        background-color:#000;
+        margin:30px;
+        text-align:center;
+        padding:15px;
+        color:#fff;
+        font-size:20px;
+        border-radius:15px;
+        ">
+          <h2>心理委员温馨提示</h2>
+          <p>1.不准从28楼肘击水泥地<br />
+          2.不可以去天台看看自己有没有隐形的翅膀<br />
+          3.脖子不能跟房梁来场酣畅淋漓的拔河比赛<br />
+          4.请不要用手腕跟刀片比硬度<br />
+          5.也不要去野湖练习憋气<br />
+          6.不能躲在国道旁等大货车出来的时候吓他一跳<br />
+          7.禁止和高铁比谁力气大<br />
+          8.拒绝喝确保庄稼正常生长的小饮料<br />
+          9.不要去和鱼比肺活量<br />
+          10.禁止cos晴天娃娃<br />
+          11.禁止在煮饭过程中点燃室内<br />
+          <strong>12.以上不是任务清单</strong></p>
+        </section>
+        <section class="Railgun" style="
+        background-color:#000;
+        margin:30px;
+        padding:15px;
+        width:100%-10px;
+        height:320px;
+        color:#fff;
+        font-size:20px;
+        position: relative;
+        overflow: hidden;
+        border-radius:15px;
+        ">
+          <img style="
+          position:absolute;
+          width:100px;
+          top: 50%;
+          left: 25%;
+          transform: translateY(-50%);
+          object-fit: cover;
+          " src="https://i.imgs.ovh/2026/01/26/yec6Yp.png" alt="y8mVMd.png" border="0">
+          <div style="
+          position: relative;
+          left:35%;
+          ">
+            <a style="
+              background-color:#000000;
+              margin:30px;
+              text-align:center;
+              color:#fff;
+              font-size:30px;
+              border:1px;"
+              href="https://www.bilibili.com/bangumi/play/ep84340">01</a>
+              <a style="
+              background-color:#000000;
+              margin:30px;
+              text-align:center;
+              color:#fff;
+              font-size:30px;"
+              href="https://www.bilibili.com/bangumi/play/ep84341">02</a>
+              <a style="
+              background-color:#000000;
+              margin:30px;
+              text-align:center;
+              color:#fff;
+              font-size:30px;"
+              href="https://www.bilibili.com/bangumi/play/ep84342">03</a>
+              <a style="
+              background-color:#000000;
+              margin:30px;
+              text-align:center;
+              color:#fff;
+              font-size:30px;"
+              href="https://www.bilibili.com/bangumi/play/ep84343">04</a>
+              <a style="
+              background-color:#000000;
+              margin:30px;
+              text-align:center;
+              color:#fff;
+              font-size:30px;"
+              href="https://www.bilibili.com/bangumi/play/ep84344">05</a>
+              <a style="
+              background-color:#000000;
+              margin:30px;
+              text-align:center;
+              color:#fff;
+              font-size:30px;"
+              href="https://www.bilibili.com/bangumi/play/ep84345">06</a><br><br><br>
+            <a style="
+              background-color:#000000;
+              margin:30px;
+              text-align:center;
+              color:#fff;
+              font-size:30px;
+              border:1px;"
+              href="https://www.bilibili.com/bangumi/play/ep84346">07</a>
+              <a style="
+              background-color:#000000;
+              margin:30px;
+              text-align:center;
+              color:#fff;
+              font-size:30px;"
+              href="https://www.bilibili.com/bangumi/play/ep84347">08</a>
+              <a style="
+              background-color:#000000;
+              margin:30px;
+              text-align:center;
+              color:#fff;
+              font-size:30px;"
+              href="https://www.bilibili.com/bangumi/play/ep84348">09</a>
+              <a style="
+              background-color:#000000;
+              margin:30px;
+              text-align:center;
+              color:#fff;
+              font-size:30px;"
+              href="https://www.bilibili.com/bangumi/play/ep84349">10</a>
+              <a style="
+              background-color:#000000;
+              margin:30px;
+              text-align:center;
+              color:#fff;
+              font-size:30px;"
+              href="https://www.bilibili.com/bangumi/play/ep84350">11</a>
+              <a style="
+              background-color:#000000;
+              margin:30px;
+              text-align:center;
+              color:#fff;
+              font-size:30px;"
+              href="https://www.bilibili.com/bangumi/play/ep84351">12</a><br><br><br>
+            <a style="
+              background-color:#000000;
+              margin:30px;
+              text-align:center;
+              color:#fff;
+              font-size:30px;
+              border:1px;"
+              href="https://www.bilibili.com/bangumi/play/ep84352">13</a>
+              <a style="
+              background-color:#000000;
+              margin:30px;
+              text-align:center;
+              color:#fff;
+              font-size:30px;"
+              href="https://www.bilibili.com/bangumi/play/ep84353">14</a>
+              <a style="
+              background-color:#000000;
+              margin:30px;
+              text-align:center;
+              color:#fff;
+              font-size:30px;"
+              href="https://www.bilibili.com/bangumi/play/ep84354">15</a>
+              <a style="
+              background-color:#000000;
+              margin:30px;
+              text-align:center;
+              color:#fff;
+              font-size:30px;"
+              href="https://www.bilibili.com/bangumi/play/ep84355">16</a>
+              <a style="
+              background-color:#000000;
+              margin:30px;
+              text-align:center;
+              color:#fff;
+              font-size:30px;"
+              href="https://www.bilibili.com/bangumi/play/ep84356">17</a>
+              <a style="
+              background-color:#000000;
+              margin:30px;
+              text-align:center;
+              color:#fff;
+              font-size:30px;"
+              href="https://www.bilibili.com/bangumi/play/ep84357">18</a><br><br><br>
+            <a style="
+              background-color:#000000;
+              margin:30px;
+              text-align:center;
+              color:#fff;
+              font-size:30px;
+              border:1px;"
+              href="https://www.bilibili.com/bangumi/play/ep84358">19</a>
+              <a style="
+              background-color:#000000;
+              margin:30px;
+              text-align:center;
+              color:#fff;
+              font-size:30px;"
+              href="https://www.bilibili.com/bangumi/play/ep84359">20</a>
+              <a style="
+              background-color:#000000;
+              margin:30px;
+              text-align:center;
+              color:#fff;
+              font-size:30px;"
+              href="https://www.bilibili.com/bangumi/play/ep84360">21</a>
+              <a style="
+              background-color:#000000;
+              margin:30px;
+              text-align:center;
+              color:#fff;
+              font-size:30px;"
+              href="https://www.bilibili.com/bangumi/play/ep84361">22</a>
+              <a style="
+              background-color:#000000;
+              margin:30px;
+              text-align:center;
+              color:#fff;
+              font-size:30px;"
+              href="https://www.bilibili.com/bangumi/play/ep84362">23</a>
+              <a style="
+              background-color:#000000;
+              margin:30px;
+              text-align:center;
+              color:#fff;
+              font-size:30px;"
+              href="https://www.bilibili.com/bangumi/play/ep84363">24</a>
+          </div>
+        </section>
+        <section class="Update" style="
+        background-color:#000;
+        margin:30px;
+        text-align:center;
+        padding:15px;
+        color:#fff;
+        font-size:20px;
+        border-radius:15px;
+        ">
+        <h1 style="
+        background-color:#000;
+        margin:30px;
+        text-align:center;
+        color:#fff;
+        font-size:40px;
+        ">更新日志</h1>
+          <h3>1.0</h3>
+          <p>2025.12.29<br>初版<br>3.67KB</p>
+          <h3>1.1</h3>
+          <p>2025.12.29<br>修复了logo不显示的问题<br>3.67KB</p>
+          <h3>1.2</h3>
+          <p>2025.12.29<br>主推副推UV合并<br>3.66KB</p>
+          <h3>1.3</h3>
+          <p>2025.12.29<br>logo换源<br>3.62KB</p>
+          <h3>1.4</h3>
+          <p>2025.12.29<br>修复了logo换源后不显示的问题<br>3.63KB</p>
+          <h3>1.5</h3>
+          <p>2025.12.30<br>增加更新日志，增加边框，logo部分改动<br>4.18KB</p>
+          <h3>1.6</h3>
+          <p>2025.12.30<br>更新日志增加日期<br>4.30KB</p>
+          <h3>1.7</h3>
+          <p>2025.12.31<br>更新日志日期改动<br>4.40KB</p>
+          <h3>1.8</h3>
+          <p>2025.12.31<br>页首更改<br>4.57KB</p>
+          <h3>1.9</h3>
+          <p>2026.1.1<br>增加分段<br>4.86KB</p>
+          <h3>2.0</h3>
+          <p>2026.1.1<br>增加一个分段，新增网易云外链播放器<br>6.76KB</p>
+          <h3>2.1</h3>
+          <p>2026.1.1<br>新增一些链接<br>10.6KB</p>
+          <h3>2.2</h3>
+          <p>2026.1.1<br>页首更改,歌曲部分进行更改，链接部分更改<br>11.2KB</p>
+          <h3>2.3</h3>
+          <p>2026.1.2<br>增加■■■分段（半成品），修复了网易云外链播放器不显示的问题<br>15.3KB</p>
+          <h3>2.4</h3>
+          <p>2026.1.3<br>完成■■■分段，页首、主页更改<br>20.6KB</p>
+          <h3>2.5</h3>
+          <p>2026.1.4<br>更新■■■分段，页尾更改，去掉网址下划线<br>21.5KB</p>
+          <h3>2.6</h3>
+          <p>2026.1.5<br>修复网址打不开的问题，更改背景颜色,页面圆角，主页更改，更新■■■分段<br>23.6KB</p>
+          <h3>2.7</h3>
+          <p>2026.1.5<br>修亿些bug<br>26.6KB</p>
+          <h3>2.8</h3>
+          <p>2026.1.9<br>改亿些东西，更新■■■分段<br>28.6KB</p>
+          <h3>2.9</h3>
+          <p>2026.1.10<br>更改边框<br>29.4KB</p>
+          <h3>3.0</h3>
+          <p>2026.1.16<br>更新■■■分段，主页更改<br>35.3KB</p>
+          <h3>3.1</h3>
+          <p>2026.1.27<br>新增一个分段<br>41.1KB</p>
+          <h3>3.2</h3>
+          <p>2026.2.13<br>新增一个分段，更新■■■分段<br>47.2KB</p>
+        </section>
+        <section class="Chart" style="
+        background-color:#000;
+        margin:30px;
+        text-align:center;
+        padding:15px;
+        color:#fff;
+        font-size:20px;
+        border-radius:15px;
+        ">
+          <div id="main" style="width: 80%; height: 400px; margin: 0 auto;"></div>
+          <script type="text/javascript">
+            document.addEventListener('DOMContentLoaded', function() {
+              var chartDom = document.getElementById('main');
+              var myChart = echarts.init(chartDom);
+              var option = {
+                title: {
+                  textStyle: { color: '#fff', fontSize: 24 }
+                },
+                tooltip: {
+                  trigger: 'axis',
+                  textStyle: { color: '#000' }
+                },
+                xAxis: {
+                  type: 'category',
+                  data: ["1.0","1.1","1.2","1.3","1.4",
+                         "1.5","1.6","1.7","1.8","1.9",
+                         "2.0","2.1","2.2","2.3","2.4",
+                         "2.5","2.6","2.7","2.8","2.9",
+                         "3.0","3.1","3.2"],
+                  axisLabel: { color: '#fff', fontSize: 14 },
+                  axisLine: { lineStyle: { color: '#fff' } },
+                  splitLine: { lineStyle: { color: 'rgba(255,255,255,0.1)' } }
+                },
+                yAxis: {
+                  type: 'value',
+                  name: 'Size (KB)',
+                  nameTextStyle: { color: '#fff' },
+                  axisLabel: { color: '#fff', fontSize: 14 },
+                  axisLine: { lineStyle: { color: '#fff' } },
+                  splitLine: { lineStyle: { color: 'rgba(255,255,255,0.1)' } }
+                },
+                series: [
+                  {
+                    name: '文件大小',
+                    data: [3.67,3.67,3.66,3.62,3.63,
+                           4.18,4.30,4.40,4.57,4.86,
+                           6.76,10.6,11.2,15.3,20.6,
+                           21.5,23.6,26.6,28.6,29.4,
+                           35.3,41.1,47.2],
+                    type: 'line',
+                    smooth: true,
+                    lineStyle: { color: '#fff', width: 1 },
+                    itemStyle: { color: '#fff' },
+                  }
+                ],
+                backgroundColor: 'transparent'
+              };
+              myChart.setOption(option);
+              window.addEventListener('resize', function() {
+                myChart.resize();
+              });
+            });
+          </script>
+        </section>
+        <section class="Locked" style="
+        background-color:#000;
+        margin:30px;
+        text-align:center;
+        padding:15px;
+        color:#fff;
+        font-size:20px;
+        border-radius:15px;
+        ">
+          <p>在管理员的命令下<br>此文档已被列为</p>
+          <h1 style="color:red;font-size:60px;">最高机密</h1>
+          <h1 style="color:red;font-size:60px;">警告</h1>
+          <p>
+            任何未经授权之人员访问该文档将立即被■■■-■■■模因抹杀触媒处决<br>
+            在未接种合适模因疫苗的情況下向下滚动页面将立刻导致心脏骤停死亡
+          </p>
+          <h1 style="color:red;">你已经被警告过了</h1>
+          <hr>
+          <p><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></p>
+          <h1>你在期待什么？</h1>
+          <p><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></p>
+          <h1>看看美西螈吧!</h1>
+          <img src="https://i.imgs.ovh/2026/01/02/CiWNvH.png" alt="CiWNvH.png" border="0" width="450px"><br>
+          <img src="https://i.imgs.ovh/2026/01/02/CinyqF.png" alt="CinyqF.png" border="0" width="450px"><br>
+          <img src="https://i.imgs.ovh/2026/01/02/Cinjbc.png" alt="Cinjbc.png" border="0" width="450px"><br>
+          <img src="https://i.imgs.ovh/2026/01/02/CinvFO.png" alt="CinvFO.png" border="0" width="450px"><br>
+          <img src="https://i.imgs.ovh/2026/01/02/CinF9d.png" alt="CinF9d.png" border="0" width="450px"><br>
+          <img src="https://i.imgs.ovh/2026/01/02/CinSIg.png" alt="CinSIg.png" border="0" width="450px"><br>
+          <img src="https://i.imgs.ovh/2026/01/02/CinUqY.png" alt="CinUqY.png" border="0" width="450px"><br>
+          <img src="https://i.imgs.ovh/2026/01/02/Cinbi1.png" alt="Cinbi1.png" border="0" width="450px"><br>
+          <p><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></p>
+          <h1>听会音乐吧</h1>
+          <iframe src="https://player.bilibili.com/player.html?isOutside=true&aid=3948934&bvid=BV1os411D7be&cid=6359664&p=1" scrolling="no" width="600vh" height="400vh"></iframe>
+          <p><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></p>
+          <hr>
+          <img style="
+          width:600px;
+          height:450px;
+          padding:40px;
+          " src="https://i.imgs.ovh/2026/01/02/Ci0vcN.jpeg"
+          alt="Ci0vcN.jpeg"
+          border="0">
+          <div>
+            <p style="color:red;"><strong>模因抹杀触媒启动<br><br>检测到生命迹象<br><br>解开安全锁</strong></p>
+            <div class="login-box">
+              <!--Password:kT5f-->
+              <label>Password</label><br>
+              <input type="password1" id="passwordInput1" placeholder="1st Password"><br>
+              <div class="error-tip1" id="errorTip1">Error</div>
+              <button onclick="checkPassword1()">Enter</button>
+            </div>
+            <div class="private-content1" id="privateContent1">
+                <p><strong>> 第一层密码验证问题通过</strong></p>
+                <div>
+                  <div class="login-box">
+                    <!--Password:QL114514-->
+                    <label>Password</label><br>
+                    <input type="password2" id="passwordInput2" placeholder="2nd Password"><br>
+                    <div class="error-tip2" id="errorTip2">Error</div>
+                    <button onclick="checkPassword2()">Enter</button>
+                  </div>
+                  <div class="private-content2" id="privateContent2">
+                      <p><strong>> 第二层密码验证问题通过</strong></p>
+                      <div>
+                        <div class="login-box">
+                          <!--Password:ZXC741ASD852QWER963'-->
+                          <label>Password</label><br>
+                          <input type="password3" id="passwordInput3" placeholder="3rd Password"><br>
+                          <div class="error-tip3" id="errorTip3">Error</div>
+                          <button onclick="checkPassword3()">Enter</button>
+                        </div>
+                        <div class="private-content3" id="privateContent3">
+                            <p><strong>> 第三层密码验证问题通过</strong></p>
+                            <p><strong>> 即将进行生物计量学检测</strong></p>
+                            <p><strong>> 生物计量学检测通过</strong></p>
+                            <p><strong>> 欢迎回来QL</strong></p>
+                            <p><strong>> 权限验证通过，正在为您加载文件中……</strong></p>
+                            <p><strong>> 加载中……</strong></p>
+                            <p><strong>> Loading... ---------- 0%</strong></p>
+                            <p><strong>> Loading... #--------- 10%</strong></p>
+                            <p><strong>> Loading... ##-------- 20%</strong></p>
+                            <p><strong>> Loading... ###------- 30%</strong></p>
+                            <p><strong>> Loading... ####------ 40%</strong></p>
+                            <p><strong>> Loading... #####----- 50%</strong></p>
+                            <p><strong>> Loading... ######---- 60%</strong></p>
+                            <p><strong>> Loading... #######--- 70%</strong></p>
+                            <p><strong>> Loading... ########-- 80%</strong></p>
+                            <p><strong>> Loading... #########- 90%</strong></p>
+                            <p><strong>> Loading... ########## 100%</strong></p>
+                            <p><strong>> 加载完成</strong></p>
+                          <div class="box">
+                            <h2>Decrypt</h2>
+                            <textarea id="cipherIn" placeholder="粘贴加密后的数字（每行一个）"></textarea><br>
+                            <button onclick="dec()">Decrypt</button>
+                            <div class="out" id="textOut"></div>
+                          </div>
+                          <script>
+                          const p = 1000000000039n;
+                          const q = 1000000000061n;
+                          const e = 65537n;
+                          const n = p * q;
+                          const phi = (p-1n)*(q-1n);
+                          const d = modInv(e, phi);
+                          function modInv(a, m) {
+                            let m0 = m, y = 0n, x = 1n;
+                            if (m === 1n) return 0n;
+                            while (a > 1n) {
+                              let q = a / m;
+                              let t = m; m = a % m; a = t; t = y;
+                              y = x - q * y; x = t;
+                            }
+                            return x < 0n ? x + m0 : x;
+                          }
+                          function powm(b, e, mod) {
+                            let r = 1n;
+                            b = b % mod;
+                            while (e > 0n) {
+                              if (e & 1n) r = (r * b) % mod;
+                              e >>= 1n;
+                              b = (b * b) % mod;
+                            }
+                            return r;
+                          }
+                          function decBlock(num) {
+                            let s = num.toString();
+                            while (s.length % 6 !== 0) s = '0' + s;
+                            let res = '';
+                            for (let i = 0; i < s.length; i += 6) {
+                              res += String.fromCharCode(parseInt(s.slice(i, i+6), 10));
+                            }
+                            return res;
+                          }
+                          function dec() {
+                            let lines = document.getElementById('cipherIn').value.trim().split('\n').filter(Boolean);
+                            let out = '';
+                            for (let line of lines) {
+                              let c = BigInt(line);
+                              let m = powm(c, d, n);
+                              out += decBlock(m);
+                            }
+                            document.getElementById('textOut').textContent = out;
+                          }
+                          </script>
+                          <div class="Main" style="
+                          background-color:#000;
+                          margin:30px;
+                          text-align:center;
+                          padding:15px;
+                          color:#fff;
+                          font-size:20px;
+                          border: 1px solid #fff;
+                          ">
+                            <h1 style="
+                            background-color:#000;
+                            margin:30px;
+                            text-align:center;
+                            color:#fff;
+                            font-size:40px;
+                            ">主页</h1>
+                            <h2><strong>关于我</strong></h2>
+                            <h3><strong>个人简介</strong></h3>
+                            <p>术力口 | 超炮 | 二次元 | MC | SCP | Phigros | 编程 | 魔方<br />
+                            <p>我的网名叫做曲率QL<br />
+                            Minecraft/代码萌新<br />
+                            关于这个名字，起源于四年级时起了个名字<br />
+                            后来觉得太尴尬了，就起了个很装的英文名<br />
+                            <!--Maugfy-->
+                            到五年级的时候，又改成了Rainbow<br />
+                            到六年级，又改成了曲率，后来完善了名字的全称，叫曲率QL</p>
+                            <h4>推：初音miku、重音teto、夜步及、御坂美琴</h4>
+                            <h3><strong>联系方式</strong></h3>
+                            <p>QQ号：1241469177</p>
+                            <h3>我的账号</h3>
+                            <a style="
+                            background-color:#000;
+                            margin:30px;
+                            text-align:center;
+                            color:#fff;
+                            font-size:20px;"
+                            href="https://space.bilibili.com/3546832162523212">B站账号</a>
+                            <br><a style="
+                            background-color:#000;
+                            margin:30px;
+                            text-align:center;
+                            color:#fff;
+                            font-size:20px;"
+                            href="https://luogu.com.cn/user/2044255">洛谷账号</a>
+                            <br><a style="
+                            background-color:#000;
+                            margin:30px；
+                            text-align:center;
+                            color:#fff;
+                            font-size:20px;"
+                            href="https://music.163.com/#/user/home?id=10003989098">网易云账号</a><br>
+                            <a style="
+                            background-color:#000000;
+                            margin:30px；
+                            text-align:center;
+                            color:#ffffff;
+                            font-size:30px;"
+                            href="https://www.bilibili.com/bangumi/play/ep84340">某科学的超电磁炮</a>
+                            <p></p>
+                          </div>
+                          <div>
+                            <div style="
+                            text-align:center;
+                            border: 1px solid #fff;
+                            width: 100vh-120px;
+                            ">
+                              <h2>OC</h2>
+                              <div style="
+                              text-align:center;
+                              border: 1px solid #fff;
+                              width: 100vh-120px;
+                              ">
+                                <h3>筑梦</h3>
+                                <p>性别：女</p>
+                                <p>年龄：13</p>
+                                <h4>关系：</h4>
+                                <p>死党：晓彤</p>
+                              </div>
+                              <div style="
+                              text-align:center;
+                              border: 1px solid #fff;
+                              width: 100vh-120px;
+                              ">
+                                <h3>晓彤</h3>
+                                <p>性别：女</p>
+                                <p>年龄：13</p>
+                                <h4>关系：</h4>
+                                <p>闺蜜：康仑</p>
+                                <p>死党：筑梦</p>
+                              </div>
+                              <div style="
+                              text-align:center;
+                              border: 1px solid #fff;
+                              width: 100vh-120px;
+                              ">
+                                <h3>康仑</h3>
+                                <p>性别：女</p>
+                                <p>年龄：13</p>
+                                <h4>关系：</h4>
+                                <p>闺蜜：晓彤</p>
+                              </div>
+                              <div style="
+                              text-align:center;
+                              border: 1px solid #fff;
+                              width: 100vh-120px;
+                              ">
+                                <h3>朱月</h3>
+                                <p>性别：男</p>
+                                <p>年龄：13</p>
+                                <h4>关系：</h4>
+                                <p>恋人：梅茨</p>
+                              </div>
+                              <div style="
+                              text-align:center;
+                              border: 1px solid #fff;
+                              width: 100vh-120px;
+                              ">
+                                <h3>梅茨</h3>
+                                <p>性别：女</p>
+                                <p>年龄：13</p>
+                                <h4>关系：</h4>
+                                <p>恋人：朱月</p>
+                              </div>
+                            </div>
+                            <div style="
+                            text-align:center;
+                            border: 1px solid #fff;
+                            width: 100vh-120px;
+                            ">
+                              <h2>班上同学Belike：</h2>
+                              <blockquote>
+                                满脑子的黄色废料<br>
+                                捡一个烂梗你当成宝<br>
+                                一张嘴用来胡说八道<br>
+                                你这种人根本没有存在必要
+                              </blockquote>
+                            </div>
+                          </div>
+                            <button onclick="hidePrivateContent()">Exit</button>
+                        </div>
+                        <script>
+                            const passwordInput3 = document.getElementById('passwordInput3');
+                            const errorTip3 = document.getElementById('errorTip3');
+                            const privateContent3 = document.getElementById('privateContent3');
+                            const CORRECT_PASSWORD3 = "ZXC741ASD852QWE963'";
+                            function checkPassword3() {
+                                const inputPassword = passwordInput3.value.trim();
+                                if (!inputPassword) {
+                                    errorTip3.textContent = 'Error';
+                                    errorTip3.style.display = 'block';
+                                    passwordInput3.focus();
+                                    return;
+                                }
+                                if (inputPassword === CORRECT_PASSWORD3) {
+                                    errorTip3.style.display = 'none';
+                                    privateContent3.style.display = 'block';
+                                } else {
+                                    errorTip3.textContent = 'Error';
+                                    errorTip3.style.display = 'block';
+                                    passwordInput3.focus();
+                                }
+                            }
+                            function hidePrivateContent() {
+                                privateContent3.style.display = 'none';
+                                passwordInput3.focus();
+                            }
+                            passwordInput3.addEventListener('keydown', (e) => {
+                                if (e.key === 'Enter') {
+                                    checkPassword3();
+                                }
+                          });
+                        </script>
+                      </div>
+                  </div>
+                  <script>
+                      const passwordInput2 = document.getElementById('passwordInput2');
+                      const errorTip2 = document.getElementById('errorTip2');
+                      const privateContent2 = document.getElementById('privateContent2');
+                      const CORRECT_PASSWORD2 = 'QL114514';
+                      function checkPassword2() {
+                          const inputPassword = passwordInput2.value.trim();
+                          if (!inputPassword) {
+                              errorTip2.textContent = 'Error';
+                              errorTip2.style.display = 'block';
+                              passwordInput2.focus();
+                              return;
+                          }
+                          if (inputPassword === CORRECT_PASSWORD2) {
+                              errorTip2.style.display = 'none';
+                              privateContent2.style.display = 'block';
+                          } else {
+                              errorTip2.textContent = 'Error';
+                              errorTip2.style.display = 'block';
+                              passwordInput2.focus();
+                          }
+                      }
+                      function hidePrivateContent() {
+                          privateContent2.style.display = 'none';
+                          passwordInput2.focus();
+                      }
+                      passwordInput2.addEventListener('keydown', (e) => {
+                          if (e.key === 'Enter') {
+                              checkPassword2();
+                          }
+                    });
+                  </script>
+                </div>
+            </div>
+            <script>
+                const passwordInput1 = document.getElementById('passwordInput1');
+                const errorTip1 = document.getElementById('errorTip1');
+                const privateContent1 = document.getElementById('privateContent1');
+                const CORRECT_PASSWORD1 = 'kT5f';
+                function checkPassword1() {
+                    const inputPassword = passwordInput1.value.trim();
+                    if (!inputPassword) {
+                        errorTip1.textContent = 'Error';
+                        errorTip1.style.display = 'block';
+                        passwordInput1.focus();
+                        return;
+                    }
+                    if (inputPassword === CORRECT_PASSWORD1) {
+                        errorTip1.style.display = 'none';
+                        privateContent1.style.display = 'block';
+                    } else {
+                        errorTip1.textContent = 'Error';
+                        errorTip1.style.display = 'block';
+                        passwordInput1.focus();
+                    }
+                }
+                function hidePrivateContent() {
+                    privateContent1.style.display = 'none';
+                    passwordInput1.focus();
+                }
+                passwordInput1.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') {
+                        checkPassword1();
+                    }
+              });
+            </script>
+          </div>
+        </section>
+      </main>
+    <footer style="
+      background-color:#000;
+      padding:15px;
+      font-size:25px;
+      color:#fff;
+      text-align:center;
+      ">
+      <p>by 曲率QL</p>
+    </footer>
+  </body>
+</html>
