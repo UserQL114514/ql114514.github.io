@@ -50,40 +50,6 @@
       .private-content3 {
         display: none;
       }
-      .box {
-        text-align: center;
-        border: 1px solid #fff;
-        width: calc(100vh - 120px);
-        margin: 0 auto;
-        padding: 25px;
-        background: #eee;
-        border-radius: 8px;
-      }
-      #cipherIn {
-        width: 100%;
-        height: 120px;
-        margin: 10px 0;
-        padding: 8px;
-        font-size: 14px;
-      }
-      .outE {
-        background: #e6e6e6;
-        padding: 15px;
-        min-height: 120px;
-        white-space: pre-wrap;
-        font-family: monospace;
-        margin-top: 15px;
-        text-align: left;
-      }
-      .outD {
-        background: #e6e6e6;
-        padding: 15px;
-        min-height: 120px;
-        white-space: pre-wrap;
-        font-family: monospace;
-        margin-top: 15px;
-        text-align: left;
-      }
     </style>
   </head>
   <body style="background-color:#111;">
@@ -327,59 +293,6 @@
           font-size:20px;
           border-radius:15px;
           ">
-          <div class="box">
-            <h2>Encrypt</h2>
-            <textarea id="textIn"></textarea><br>
-            <button onclick="enc()">Encrypt</button>
-            <div class="outE" id="cipherOut"></div>
-            <p>把加密后的文本发到我的邮箱，让我看看有多少人看过我的网站</p>
-          </div>
-          <script>
-          const p = 1000000000039n;
-          const q = 1000000000061n;
-          const e = 65537n;
-          const n = p * q;
-          const phi = (p-1n)*(q-1n);
-          const d = modInv(e, phi);
-          function modInv(a, m) {
-            let m0 = m, y = 0n, x = 1n;
-            if (m === 1n) return 0n;
-            while (a > 1n) {
-              let q = a / m;
-              let t = m; m = a % m; a = t; t = y;
-              y = x - q * y; x = t;
-            }
-            return x < 0n ? x + m0 : x;
-          }
-          function powm(b, e, mod) {
-            let r = 1n;
-            b = b % mod;
-            while (e > 0n) {
-              if (e & 1n) r = (r * b) % mod;
-              e >>= 1n;
-              b = (b * b) % mod;
-            }
-            return r;
-          }
-          function encBlock(str) {
-            let parts = [];
-            for (let c of str) {
-              let code = c.charCodeAt(0);
-              parts.push(code.toString().padStart(6, '0'));
-            }
-            return BigInt(parts.join(''));
-          }
-          function enc() {
-            let txt = document.getElementById('textIn').value;
-            let blocks = [];
-            for (let i = 0; i < txt.length; i += 4) {
-              let chunk = txt.slice(i, i+4);
-              blocks.push(encBlock(chunk));
-            }
-            let ciphers = blocks.map(m => powm(m, e, n).toString());
-            document.getElementById('cipherOut').textContent = ciphers.join('\n');
-          }
-          </script>
         </section>
         <section class="Tips" style="
         background-color:#000;
@@ -663,7 +576,7 @@
           <h3>3.1</h3>
           <p>2026.1.27<br>新增一个分段<br>41.1KB</p>
           <h3>3.2</h3>
-          <p>2026.2.13<br>新增一个分段，更新■■■分段<br>47.2KB</p>
+          <p>2026.2.13<br>更新■■■分段<br>47.2KB</p>
         </section>
         <section class="Chart" style="
         background-color:#000;
@@ -819,63 +732,6 @@
                             <p><strong>> Loading... #########- 90%</strong></p>
                             <p><strong>> Loading... ########## 100%</strong></p>
                             <p><strong>> 加载完成</strong></p>
-                            <div class="box" style="
-                            text-align:center;
-                            border: 1px solid #fff;
-                            width: 100vh-120px;
-                            ">
-                            <h2>Decrypt</h2>
-                            <textarea id="cipherIn" placeholder=""></textarea><br>
-                            <button onclick="dec()">Decrypt</button>
-                            <div class="outD" id="textOut"></div>
-                          </div>
-                          <script>
-                          const p = 1000000000039n;
-                          const q = 1000000000061n;
-                          const e = 65537n;
-                          const n = p * q;
-                          const phi = (p-1n)*(q-1n);
-                          const d = modInv(e, phi);
-                          function modInv(a, m) {
-                            let m0 = m, y = 0n, x = 1n;
-                            if (m === 1n) return 0n;
-                            while (a > 1n) {
-                              let q = a / m;
-                              let t = m; m = a % m; a = t; t = y;
-                              y = x - q * y; x = t;
-                            }
-                            return x < 0n ? x + m0 : x;
-                          }
-                          function powm(b, e, mod) {
-                            let r = 1n;
-                            b = b % mod;
-                            while (e > 0n) {
-                              if (e & 1n) r = (r * b) % mod;
-                              e >>= 1n;
-                              b = (b * b) % mod;
-                            }
-                            return r;
-                          }
-                          function decBlock(num) {
-                            let s = num.toString();
-                            while (s.length % 6 !== 0) s = '0' + s;
-                            let res = '';
-                            for (let i = 0; i < s.length; i += 6) {
-                              res += String.fromCharCode(parseInt(s.slice(i, i+6), 10));
-                            }
-                            return res;
-                          }
-                          function dec() {
-                            let lines = document.getElementById('cipherIn').value.trim().split('\n').filter(Boolean);
-                            let out = '';
-                            for (let line of lines) {
-                              let c = BigInt(line);
-                              let m = powm(c, d, n);
-                              out += decBlock(m);
-                            }
-                            document.getElementById('textOut').textContent = out;
-                          }
-                          </script>
                           <div class="Main" style="
                           background-color:#000;
                           margin:30px;
@@ -885,6 +741,7 @@
                           font-size:20px;
                           border: 1px solid #fff;
                           ">
+                            <div>
                             <h1 style="
                             background-color:#000;
                             margin:30px;
@@ -935,69 +792,72 @@
                             font-size:30px;"
                             href="https://www.bilibili.com/bangumi/play/ep84340">某科学的超电磁炮</a>
                             <p></p>
-                          </div>
-                          <div>
+                            </div>
                             <div style="
-                            text-align:center;
-                            border: 1px solid #fff;
-                            width: 100vh-120px;
+                            padding:20px;
                             ">
-                              <h2>OC</h2>
                               <div style="
                               text-align:center;
                               border: 1px solid #fff;
                               width: 100vh-120px;
                               ">
-                                <h3>筑梦</h3>
-                                <p>性别：女</p>
-                                <p>年龄：13</p>
-                                <h4>关系：</h4>
-                                <p>死党：晓彤</p>
-                              </div>
-                              <div style="
-                              text-align:center;
-                              border: 1px solid #fff;
-                              width: 100vh-120px;
-                              ">
-                                <h3>晓彤</h3>
-                                <p>性别：女</p>
-                                <p>年龄：13</p>
-                                <h4>关系：</h4>
-                                <p>闺蜜：康仑</p>
-                                <p>死党：筑梦</p>
-                              </div>
-                              <div style="
-                              text-align:center;
-                              border: 1px solid #fff;
-                              width: 100vh-120px;
-                              ">
-                                <h3>康仑</h3>
-                                <p>性别：女</p>
-                                <p>年龄：13</p>
-                                <h4>关系：</h4>
-                                <p>闺蜜：晓彤</p>
-                              </div>
-                              <div style="
-                              text-align:center;
-                              border: 1px solid #fff;
-                              width: 100vh-120px;
-                              ">
-                                <h3>朱月</h3>
-                                <p>性别：男</p>
-                                <p>年龄：13</p>
-                                <h4>关系：</h4>
-                                <p>恋人：梅茨</p>
-                              </div>
-                              <div style="
-                              text-align:center;
-                              border: 1px solid #fff;
-                              width: 100vh-120px;
-                              ">
-                                <h3>梅茨</h3>
-                                <p>性别：女</p>
-                                <p>年龄：13</p>
-                                <h4>关系：</h4>
-                                <p>恋人：朱月</p>
+                                <h2>OC</h2>
+                                <div style="
+                                text-align:center;
+                                border: 1px solid #fff;
+                                width: 100vh-120px;
+                                ">
+                                  <h3>筑梦</h3>
+                                  <p>性别：女</p>
+                                  <p>年龄：13</p>
+                                  <h4>关系：</h4>
+                                  <p>死党：晓彤</p>
+                                </div>
+                                <div style="
+                                text-align:center;
+                                border: 1px solid #fff;
+                                width: 100vh-120px;
+                                ">
+                                  <h3>晓彤</h3>
+                                  <p>性别：女</p>
+                                  <p>年龄：13</p>
+                                  <h4>关系：</h4>
+                                  <p>闺蜜：康仑</p>
+                                  <p>死党：筑梦</p>
+                                </div>
+                                <div style="
+                                text-align:center;
+                                border: 1px solid #fff;
+                                width: 100vh-120px;
+                                ">
+                                  <h3>康仑</h3>
+                                  <p>性别：女</p>
+                                  <p>年龄：13</p>
+                                  <h4>关系：</h4>
+                                  <p>闺蜜：晓彤</p>
+                                </div>
+                                <div style="
+                                text-align:center;
+                                border: 1px solid #fff;
+                                width: 100vh-120px;
+                                ">
+                                  <h3>朱月</h3>
+                                  <p>性别：男</p>
+                                  <p>年龄：13</p>
+                                  <h4>关系：</h4>
+                                  <p>恋人：梅茨</p>
+                                </div>
+                                <div style="
+                                text-align:center;
+                                border: 1px solid #fff;
+                                width: 100vh-120px;
+                                ">
+                                  <h3>梅茨</h3>
+                                  <p>性别：女</p>
+                                  <p>年龄：13</p>
+                                  <h4>关系：</h4>
+                                  <p>恋人：朱月</p>
+                                </div>
                               </div>
                             </div>
                             <div style="
