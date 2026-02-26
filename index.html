@@ -790,7 +790,7 @@
                             <h2>Decrypt</h2>
                             <textarea id="cipherIn" placeholder=""></textarea><br>
                             <button onclick="dec()">Decrypt</button>
-                            <div class="out" id="textOut"></div>
+                            <div class="out" id="textOutD"></div>
                           </div>
                           <script>
                           const p = 1000000000039n;
@@ -836,7 +836,7 @@
                               let m = powm(c, d, n);
                               out += decBlock(m);
                             }
-                            document.getElementById('textOut').textContent = out;
+                            document.getElementById('textOutD').textContent = out;
                           }
                           </script>
                           <div class="Main" style="
