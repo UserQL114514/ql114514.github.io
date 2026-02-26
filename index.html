@@ -50,6 +50,10 @@
       .private-content3 {
         display: none;
       }
+      .box{max-width:700px;margin:30px auto;background:#222;padding:25px;}
+      textarea{width:100%;height:120px;margin:10px 0}
+      button{padding:10px 25px;background:#36d;color:white;border:none;cursor:pointer}
+      .out{background:#222;padding:15px;min-height:120px;white-space:pre-wrap;font-family:monospace}
     </style>
   </head>
   <body style="background-color:#111;">
@@ -75,7 +79,6 @@
       right:15px;
       ">
         <p><strong>v3.2<br>第23版<br>1095 Line</strong></p>
-        ...
       </nav>
     </header>
       <main>
@@ -786,11 +789,15 @@
                             <p><strong>> Loading... #########- 90%</strong></p>
                             <p><strong>> Loading... ########## 100%</strong></p>
                             <p><strong>> 加载完成</strong></p>
-                          <div class="box">
+                            <div class="box" style="
+                            text-align:center;
+                            border: 1px solid #fff;
+                            width: 100vh-120px;
+                            ">
                             <h2>Decrypt</h2>
                             <textarea id="cipherIn" placeholder=""></textarea><br>
                             <button onclick="dec()">Decrypt</button>
-                            <div class="out" id="textOutD"></div>
+                            <div class="out" id="textOut"></div>
                           </div>
                           <script>
                           const p = 1000000000039n;
@@ -836,7 +843,7 @@
                               let m = powm(c, d, n);
                               out += decBlock(m);
                             }
-                            document.getElementById('textOutD').textContent = out;
+                            document.getElementById('textOut').textContent = out;
                           }
                           </script>
                           <div class="Main" style="
