@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>计数器应用</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <style>
+        /* 确保字体支持中文显示 */
+        * {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #000;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s ease;
+        }
+        
+        #counter {
+            color: #fff;
+            font-size: clamp(5rem, 15vw, 10rem);
+            font-weight: lighter;
+            cursor: pointer;
+            transition: transform 0.2s ease, color 0.3s ease;
+            user-select: none;
+        }
+        
+        #counter:active {
+            transform: scale(0.95);
+        }
+        
+        /* 设置按钮样式 */
+        #settings-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+        }
+        
+        #settings-btn:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+        
+        /* 背景遮罩 */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 99;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        /* 设置面板样式 - 居中悬浮窗口 */
+        .panel {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.9);
+            background-color: #222;
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 450px;
+            z-index: 100;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .panel.open {
+            opacity: 1;
+            visibility: visible;
+            transform: translate(-50%, -50%) scale(1);
+        }
+        
+        /* 按钮样式 */
+        .settings-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #333;
+        }
+        
+        .btn {
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.2s;
+            border: none;
+        }
+        
+        .btn-cancel {
+            background-color: transparent;
+            color: #ccc;
+        }
+        
+        .btn-cancel:hover {
+            color: white;
+        }
+        
+        .btn-save {
+            background-color: #4a90e2;
+            color: white;
+        }
+        
+        .btn-save:hover {
+            background-color: #3a80d2;
+        }
+        
+        /* 归零按钮样式 */
+        .btn-ac {
+            background-color: #e74c3c;
+            color: white;
+            position: absolute;
+            bottom: 25px;
+            right: 25px;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.2s;
+            border: none;
+            z-index: 101;
+        }
+        
+        .btn-ac:hover {
+            background-color: #c0392b;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .btn-ac:active {
+            transform: translateY(0);
+            box-shadow: none;
+        }
+        
+        .setting-group {
+            margin-bottom: 25px;
+        }
+        
+        .setting-label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 500;
+            color: #ddd;
+        }
+        
+        /* 颜色选项容器 */
+        .color-options {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        
+        /* 背景颜色特殊布局 */
+        .bg-color-container {
+            display: flex;
+            align-items: center;
+        }
+        
+        .basic-colors {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+        
+        .custom-color-container {
+            margin-left: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        /* 颜色选项通用样式 */
+        .color-option-wrapper {
+            position: relative;
+            width: 46px;
+            height: 46px;
+            cursor: pointer;
+        }
+        
+        .color-option {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            transition: transform 0.2s;
+        }
+        
+        .color-option-wrapper:hover .color-option {
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+        
+        /* 选中状态的颜色环 */
+        .color-option-wrapper.selected .color-ring {
+            position: absolute;
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            border: 2px solid;
+            top: 0;
+            left: 0;
+        }
+        
+        /* 自定义颜色选项样式 */
+        .custom-color-option {
+            position: relative;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+        
+        .custom-ring {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: conic-gradient(
+                red, orange, yellow, green, blue, indigo, violet, red
+            );
+        }
+        
+        .custom-inner {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background-color: #ffffff;
+            border: 2px solid #333;
+        }
+        
+        /* 自定义选项的选中样式 */
+        .color-option-wrapper.selected.custom .color-ring {
+            border-color: #4a90e2;
+            box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.3);
+        }
+        
+        /* 隐藏原生颜色输入框 */
+        input[type="color"] {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+            overflow: hidden;
+        }
+
+        /* 开发者模式相关样式 */
+        .developer-section {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #333;
+            display: none;
+        }
+        
+        .developer-input-group {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .developer-input {
+            flex: 1;
+            padding: 8px 12px;
+            border-radius: 4px;
+            border: 1px solid #444;
+            background-color: #333;
+            color: white;
+            font-size: 1rem;
+        }
+        
+        .developer-mode-btn {
+            display: block;
+            margin: 20px auto 0;
+            padding: 8px 16px;
+            border-radius: 4px;
+            background-color: #666;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        .developer-mode-btn.active {
+            background-color: #e74c3c;
+        }
+        
+        .developer-mode-btn:hover {
+            background-color: #777;
+        }
+        
+        .developer-mode-btn.active:hover {
+            background-color: #c0392b;
+        }
+        
+        /* 更改密码按钮样式 */
+        .change-password-btn {
+            position: absolute;
+            bottom: 25px;
+            left: 25px;
+            background: none;
+            border: 1px solid #4a90e2;
+            color: #4a90e2;
+            cursor: pointer;
+            font-size: 0.9rem;
+            padding: 6px 12px;
+            border-radius: 4px;
+            display: none;
+            transition: all 0.2s;
+        }
+        
+        .change-password-btn:hover {
+            background-color: rgba(74, 144, 226, 0.1);
+        }
+        
+        .change-password-btn:active {
+            background-color: rgba(74, 144, 226, 0.2);
+        }
+        
+        .password-input-row {
+            margin-bottom: 15px;
+        }
+        
+        .password-input-row label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+            color: #ddd;
+        }
+        
+        .password-input-row input {
+            width: 100%;
+            padding: 8px 12px;
+            border-radius: 4px;
+            border: 1px solid #444;
+            background-color: #333;
+            color: white;
+            font-size: 1rem;
+        }
+        
+        .password-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .password-error {
+            color: #e74c3c;
+            font-size: 0.9rem;
+            margin-top: 5px;
+            display: none;
+        }
+        
+        /* 密码弹窗通用样式 */
+        .password-modal {
+            z-index: 101;
+        }
+        
+        .modal-title {
+            margin-top: 0;
+            margin-bottom: 20px;
+            color: #fff;
+            font-size: 1.2rem;
+        }
+        
+        /* AC确认窗口样式 */
+        #ac-confirm-modal {
+            z-index: 102;
+            max-width: 350px;
+        }
+        
+        .confirm-message {
+            margin-bottom: 25px;
+            line-height: 1.6;
+            color: #ddd;
+        }
+        
+        /* 响应式调整 */
+        @media (max-width: 450px) {
+            .bg-color-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .custom-color-container {
+                margin-left: 0;
+                margin-top: 15px;
+            }
+            
+            .developer-input-group {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .btn-ac, .change-password-btn {
+                position: static;
+                margin-top: 10px;
+            }
+            
+            .settings-bottom-actions {
+                display: flex;
+                justify-content: space-between;
+                margin-top: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="counter">0</div>
+    
+    <!-- 设置按钮 -->
+    <button id="settings-btn">
+        <i class="fa fa-cog"></i>
+    </button>
+    
+    <!-- 背景遮罩 -->
+    <div id="settings-overlay" class="overlay"></div>
+    
+    <!-- 设置面板 -->
+    <div id="settings-panel" class="panel">
+        <div class="settings-actions">
+            <button class="btn btn-cancel" id="cancel-btn">取消</button>
+            <button class="btn btn-save" id="save-btn">保存</button>
+        </div>
+        
+        <!-- 背景颜色设置 -->
+        <div class="setting-group">
+            <label class="setting-label">背景颜色</label>
+            <div class="bg-color-container">
+                <div class="basic-colors">
+                    <div class="color-option-wrapper selected" data-color="#000000">
+                        <div class="color-option" style="background-color: #000000;"></div>
+                        <div class="color-ring" style="border-color: #000000;"></div>
+                    </div>
+                    <div class="color-option-wrapper" data-color="#0000ff">
+                        <div class="color-option" style="background-color: #0000ff;"></div>
+                        <div class="color-ring" style="border-color: #0000ff;"></div>
+                    </div>
+                    <div class="color-option-wrapper" data-color="#8000ff">
+                        <div class="color-option" style="background-color: #8000ff;"></div>
+                        <div class="color-ring" style="border-color: #8000ff;"></div>
+                    </div>
+                    <div class="color-option-wrapper" data-color="#ff0000">
+                        <div class="color-option" style="background-color: #ff0000;"></div>
+                        <div class="color-ring" style="border-color: #ff0000;"></div>
+                    </div>
+                    
+                    <div class="color-option-wrapper" data-color="#ff8000">
+                        <div class="color-option" style="background-color: #ff8000;"></div>
+                        <div class="color-ring" style="border-color: #ff8000;"></div>
+                    </div>
+                    <div class="color-option-wrapper" data-color="#ffff00">
+                        <div class="color-option" style="background-color: #ffff00;"></div>
+                        <div class="color-ring" style="border-color: #ffff00;"></div>
+                    </div>
+                    <div class="color-option-wrapper" data-color="#00ff00">
+                        <div class="color-option" style="background-color: #00ff00;"></div>
+                        <div class="color-ring" style="border-color: #00ff00;"></div>
+                    </div>
+                    <div class="color-option-wrapper" data-color="#ffffff">
+                        <div class="color-option" style="background-color: #ffffff; border: 1px solid #ccc;"></div>
+                        <div class="color-ring" style="border-color: #ffffff;"></div>
+                    </div>
+                </div>
+                
+                <div class="custom-color-container">
+                    <div class="color-option-wrapper custom" data-color="custom">
+                        <div class="color-option">
+                            <div class="custom-color-option">
+                                <div class="custom-ring"></div>
+                                <div class="custom-inner" id="bg-custom-preview"></div>
+                            </div>
+                        </div>
+                        <div class="color-ring"></div>
+                    </div>
+                </div>
+            </div>
+            <input type="color" id="bg-color-input" value="#000000">
+        </div>
+        
+        <!-- 字体颜色设置 -->
+        <div class="setting-group">
+            <label class="setting-label">字体颜色</label>
+            <div class="color-options">
+                <div class="color-option-wrapper" data-color="#000000">
+                    <div class="color-option" style="background-color: #000000; border: 1px solid #ccc;"></div>
+                    <div class="color-ring" style="border-color: #000000;"></div>
+                </div>
+                <div class="color-option-wrapper selected" data-color="#ffffff">
+                    <div class="color-option" style="background-color: #ffffff;"></div>
+                    <div class="color-ring" style="border-color: #ffffff;"></div>
+                </div>
+                <div class="color-option-wrapper custom" data-color="custom">
+                    <div class="color-option">
+                        <div class="custom-color-option">
+                            <div class="custom-ring"></div>
+                            <div class="custom-inner" id="text-custom-preview"></div>
+                        </div>
+                    </div>
+                    <div class="color-ring"></div>
+                </div>
+            </div>
+            <input type="color" id="text-color-input" value="#ffffff">
+        </div>
+        
+        <!-- 开发者模式数字输入框 -->
+        <div class="developer-section" id="developer-section">
+            <div class="setting-group">
+                <label class="setting-label">设置点击次数</label>
+                <div class="developer-input-group">
+                    <input type="number" class="developer-input" id="count-input" placeholder="输入次数...">
+                </div>
+            </div>
+        </div>
+        
+        <!-- 开发者模式按钮 -->
+        <button class="developer-mode-btn" id="developer-mode-btn">开发者模式</button>
+        
+        <!-- 更改密码按钮 -->
+        <button class="change-password-btn" id="change-password-btn" type="button">更改密码</button>
+        
+        <!-- 归零按钮 -->
+        <button class="btn-ac" id="ac-btn" type="button">AC</button>
+    </div>
+    
+    <!-- AC确认窗口 -->
+    <div id="ac-confirm-modal" class="panel password-modal">
+        <div class="modal-title">确认归零</div>
+        <div class="confirm-message">
+            确定要将计数器归零吗？<br>
+            此操作将清除当前计数，且不可撤销。
+        </div>
+        <div class="password-actions">
+            <button class="btn btn-cancel" id="ac-cancel">取消</button>
+            <button class="btn btn-save" id="ac-confirm">确认归零</button>
+        </div>
+    </div>
+    
+    <!-- 开发者模式密码弹窗 -->
+    <div id="password-modal" class="panel password-modal">
+        <div class="modal-title">输入开发者密码</div>
+        <div class="password-input-row">
+            <label for="password-modal-input">密码:</label>
+            <input type="password" id="password-modal-input" placeholder="输入密码..." autocomplete="new-password">
+        </div>
+        <div class="password-error" id="modal-password-error">密码错误</div>
+        <div class="password-actions">
+            <button class="btn btn-cancel" id="modal-cancel-password">取消</button>
+            <button class="btn btn-save" id="modal-submit-password">确定</button>
+        </div>
+    </div>
+    
+    <!-- 更改密码弹窗 -->
+    <div id="change-password-modal" class="panel password-modal">
+        <div class="modal-title">更改密码</div>
+        <div class="password-input-row">
+            <label for="old-password">当前密码</label>
+            <input type="password" id="old-password" placeholder="输入旧密码..." autocomplete="current-password">
+            <div class="password-error" id="old-password-error">密码错误</div>
+        </div>
+        <div class="password-input-row">
+            <label for="new-password">新密码</label>
+            <input type="password" id="new-password" placeholder="输入新密码..." autocomplete="new-password">
+            <div class="password-error" id="new-password-error">新密码不能为空</div>
+        </div>
+        <div class="password-input-row">
+            <label for="confirm-password">确认新密码</label>
+            <input type="password" id="confirm-password" placeholder="确认新密码..." autocomplete="new-password">
+            <div class="password-error" id="confirm-password-error">两次输入密码不一致</div>
+        </div>
+        <div class="password-actions">
+            <button class="btn btn-cancel" id="cancel-change">取消</button>
+            <button class="btn btn-save" id="save-change">保存</button>
+        </div>
+    </div>
+
+    <script>
+        // 计数器功能
+        let count = 0;
+        let isDeveloperMode = false;
+        // 从本地存储获取密码，如果没有则使用默认密码
+        let correctPassword = localStorage.getItem('developerPassword') || "QL114514";
+        
+        const counterElement = document.getElementById('counter');
+        const bodyElement = document.body;
+        
+        // 元素引用
+        const settingsBtn = document.getElementById('settings-btn');
+        const settingsPanel = document.getElementById('settings-panel');
+        const settingsOverlay = document.getElementById('settings-overlay');
+        const cancelBtn = document.getElementById('cancel-btn');
+        const saveBtn = document.getElementById('save-btn');
+        const bgColorWrappers = document.querySelectorAll('.setting-group:nth-child(2) .color-option-wrapper');
+        const textColorWrappers = document.querySelectorAll('.setting-group:nth-child(3) .color-option-wrapper');
+        const bgColorInput = document.getElementById('bg-color-input');
+        const textColorInput = document.getElementById('text-color-input');
+        const bgCustomPreview = document.getElementById('bg-custom-preview');
+        const textCustomPreview = document.getElementById('text-custom-preview');
+        
+        // 新增功能元素
+        const acBtn = document.getElementById('ac-btn');
+        const acConfirmModal = document.getElementById('ac-confirm-modal');
+        const acCancelBtn = document.getElementById('ac-cancel');
+        const acConfirmBtn = document.getElementById('ac-confirm');
+        const changePasswordBtn = document.getElementById('change-password-btn');
+        const changePasswordModal = document.getElementById('change-password-modal');
+        const oldPasswordInput = document.getElementById('old-password');
+        const newPasswordInput = document.getElementById('new-password');
+        const confirmPasswordInput = document.getElementById('confirm-password');
+        const cancelChangeBtn = document.getElementById('cancel-change');
+        const saveChangeBtn = document.getElementById('save-change');
+        const oldPasswordError = document.getElementById('old-password-error');
+        const newPasswordError = document.getElementById('new-password-error');
+        const confirmPasswordError = document.getElementById('confirm-password-error');
+        
+        // 开发者模式元素
+        const developerModeBtn = document.getElementById('developer-mode-btn');
+        const passwordModal = document.getElementById('password-modal');
+        const passwordModalInput = document.getElementById('password-modal-input');
+        const modalSubmitPassword = document.getElementById('modal-submit-password');
+        const modalCancelPassword = document.getElementById('modal-cancel-password');
+        const modalPasswordError = document.getElementById('modal-password-error');
+        const developerSection = document.getElementById('developer-section');
+        const countInput = document.getElementById('count-input');
+        
+        // 初始化面板状态
+        settingsPanel.classList.remove('open');
+        passwordModal.classList.remove('open');
+        changePasswordModal.classList.remove('open');
+        acConfirmModal.classList.remove('open');
+        settingsOverlay.classList.remove('active');
+        
+        // 点击计数
+        bodyElement.addEventListener('click', function(e) {
+            // 避免点击设置按钮、遮罩和面板时计数
+            if (!e.target.closest('#settings-btn') && 
+                !e.target.closest('.panel') && 
+                !e.target.closest('.overlay')) {
+                count++;
+                counterElement.textContent = count;
+                // 更新开发者模式输入框
+                if (isDeveloperMode) {
+                    countInput.value = count;
+                }
+            }
+        });
+        
+        // AC按钮点击 - 显示确认窗口
+        acBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            
+            // 隐藏其他面板，显示确认窗口
+            settingsPanel.classList.remove('open');
+            passwordModal.classList.remove('open');
+            changePasswordModal.classList.remove('open');
+            acConfirmModal.classList.add('open');
+            settingsOverlay.classList.add('active');
+        });
+        
+        // 取消归零
+        acCancelBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            
+            // 关闭确认窗口，返回设置面板
+            acConfirmModal.classList.remove('open');
+            if (isDeveloperMode || settingsPanel.classList.contains('open')) {
+                settingsPanel.classList.add('open');
+            } else {
+                settingsOverlay.classList.remove('active');
+            }
+        });
+        
+        // 确认归零
+        acConfirmBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            
+            // 执行归零操作
+            count = 0;
+            counterElement.textContent = count;
+            
+            // 更新开发者模式输入框
+            if (isDeveloperMode) {
+                countInput.value = count;
+            }
+            
+            // 保存归零状态
+            const savedSettings = localStorage.getItem('counterSettings');
+            if (savedSettings) {
+                try {
+                    const settings = JSON.parse(savedSettings);
+                    settings.count = 0;
+                    localStorage.setItem('counterSettings', JSON.stringify(settings));
+                } catch (e) {
+                    console.error('保存归零状态失败:', e);
+                }
+            }
+            
+            // 关闭确认窗口和遮罩
+            acConfirmModal.classList.remove('open');
+            settingsOverlay.classList.remove('active');
+            
+            // 视觉反馈
+            counterElement.classList.add('scale-90');
+            setTimeout(() => {
+                counterElement.classList.remove('scale-90');
+            }, 200);
+        });
+        
+        // 更改密码按钮点击事件
+        changePasswordBtn.addEventListener('click', function(e) {
+            e.stopPropagation(); // 防止事件冒泡
+            
+            // 隐藏设置面板，显示密码修改弹窗
+            settingsPanel.classList.remove('open');
+            changePasswordModal.classList.add('open');
+            
+            // 重置输入框和错误信息
+            oldPasswordInput.value = '';
+            newPasswordInput.value = '';
+            confirmPasswordInput.value = '';
+            oldPasswordError.style.display = 'none';
+            newPasswordError.style.display = 'none';
+            confirmPasswordError.style.display = 'none';
+        });
+        
+        // 关闭更改密码弹窗，返回设置面板
+        cancelChangeBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            changePasswordModal.classList.remove('open');
+            settingsPanel.classList.add('open');
+        });
+        
+        // 保存新密码
+        saveChangeBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            let isValid = true;
+            const oldPassword = oldPasswordInput.value;
+            const newPassword = newPasswordInput.value;
+            const confirmPassword = confirmPasswordInput.value;
+            
+            // 验证旧密码
+            if (oldPassword !== correctPassword) {
+                oldPasswordError.style.display = 'block';
+                isValid = false;
+            } else {
+                oldPasswordError.style.display = 'none';
+            }
+            
+            // 验证新密码
+            if (!newPassword) {
+                newPasswordError.style.display = 'block';
+                isValid = false;
+            } else {
+                newPasswordError.style.display = 'none';
+            }
+            
+            // 验证确认密码
+            if (newPassword !== confirmPassword) {
+                confirmPasswordError.style.display = 'block';
+                isValid = false;
+            } else {
+                confirmPasswordError.style.display = 'none';
+            }
+            
+            // 如果验证通过，保存新密码
+            if (isValid) {
+                correctPassword = newPassword;
+                localStorage.setItem('developerPassword', newPassword);
+                alert('密码修改成功！');
+                changePasswordModal.classList.remove('open');
+                settingsPanel.classList.add('open');
+            }
+        });
+        
+        // 更新自定义颜色预览
+        function updateCustomPreview(element, color) {
+            element.style.backgroundColor = color;
+        }
+        
+        // 初始化预览
+        updateCustomPreview(bgCustomPreview, bgColorInput.value);
+        updateCustomPreview(textCustomPreview, textColorInput.value);
+        
+        // 颜色选择器变化时更新预览
+        bgColorInput.addEventListener('input', function() {
+            updateCustomPreview(bgCustomPreview, this.value);
+        });
+        
+        textColorInput.addEventListener('input', function() {
+            updateCustomPreview(textCustomPreview, this.value);
+        });
+        
+        // 打开设置面板
+        function openSettingsPanel() {
+            // 确保其他弹窗关闭
+            passwordModal.classList.remove('open');
+            changePasswordModal.classList.remove('open');
+            acConfirmModal.classList.remove('open');
+            // 显示设置面板
+            settingsPanel.classList.add('open');
+            settingsOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        // 关闭设置面板
+        function closeSettingsPanel() {
+            settingsPanel.classList.remove('open');
+            settingsOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        
+        // 点击设置按钮打开面板
+        settingsBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            openSettingsPanel();
+        });
+        
+        // 点击遮罩关闭面板
+        settingsOverlay.addEventListener('click', function(e) {
+            if (e.target === settingsOverlay) {
+                closeSettingsPanel();
+                passwordModal.classList.remove('open');
+                changePasswordModal.classList.remove('open');
+                acConfirmModal.classList.remove('open');
+            }
+        });
+        
+        // 取消按钮
+        cancelBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            closeSettingsPanel();
+        });
+        
+        // 处理背景颜色选项点击
+        bgColorWrappers.forEach(wrapper => {
+            wrapper.addEventListener('click', function(e) {
+                e.stopPropagation();
+                bgColorWrappers.forEach(w => w.classList.remove('selected'));
+                this.classList.add('selected');
+                
+                const colorType = this.getAttribute('data-color');
+                if (colorType === 'custom') {
+                    setTimeout(() => bgColorInput.click(), 100);
+                } else {
+                    bgColorInput.value = colorType;
+                    updateCustomPreview(bgCustomPreview, colorType);
+                }
+            });
+        });
+        
+        // 处理字体颜色选项点击
+        textColorWrappers.forEach(wrapper => {
+            wrapper.addEventListener('click', function(e) {
+                e.stopPropagation();
+                textColorWrappers.forEach(w => w.classList.remove('selected'));
+                this.classList.add('selected');
+                
+                const colorType = this.getAttribute('data-color');
+                if (colorType === 'custom') {
+                    setTimeout(() => textColorInput.click(), 100);
+                } else {
+                    textColorInput.value = colorType;
+                    updateCustomPreview(textCustomPreview, colorType);
+                }
+            });
+        });
+        
+        // 保存设置
+        saveBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const bgColor = bgColorInput.value;
+            let textColor;
+            const selectedTextWrapper = document.querySelector('.setting-group:nth-child(3) .color-option-wrapper.selected');
+            if (selectedTextWrapper.getAttribute('data-color') === 'custom') {
+                textColor = textColorInput.value;
+            } else {
+                textColor = selectedTextWrapper.getAttribute('data-color');
+            }
+            
+            // 如果是开发者模式，保存输入框中的数字
+            if (isDeveloperMode) {
+                const newCount = parseInt(countInput.value, 10);
+                if (!isNaN(newCount) && newCount >= 0) {
+                    count = newCount;
+                    counterElement.textContent = count;
+                } else {
+                    alert('请输入有效的数字');
+                    countInput.value = count;
+                    return;
+                }
+            }
+            
+            bodyElement.style.backgroundColor = bgColor;
+            counterElement.style.color = textColor;
+            
+            localStorage.setItem('counterSettings', JSON.stringify({
+                bgColor,
+                textColor,
+                count: count,
+                selectedBgColorType: document.querySelector('.setting-group:nth-child(2) .color-option-wrapper.selected').getAttribute('data-color'),
+                selectedTextColorType: selectedTextWrapper.getAttribute('data-color')
+            }));
+            
+            closeSettingsPanel();
+        });
+        
+        // 开发者模式功能
+        developerModeBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            if (isDeveloperMode) {
+                // 退出开发者模式
+                exitDeveloperMode();
+            } else {
+                // 打开密码弹窗
+                openPasswordModal();
+            }
+        });
+        
+        // 打开密码弹窗
+        function openPasswordModal() {
+            settingsPanel.classList.remove('open');
+            passwordModal.classList.add('open');
+            settingsOverlay.classList.add('active');
+            passwordModalInput.value = '';
+            modalPasswordError.style.display = 'none';
+            passwordModalInput.focus();
+        }
+        
+        // 关闭密码弹窗，返回设置面板
+        function closePasswordModal() {
+            passwordModal.classList.remove('open');
+            modalPasswordError.style.display = 'none';
+            settingsPanel.classList.add('open');
+        }
+        
+        // 取消密码输入
+        modalCancelPassword.addEventListener('click', function(e) {
+            e.stopPropagation();
+            closePasswordModal();
+        });
+        
+        // 提交密码
+        modalSubmitPassword.addEventListener('click', function(e) {
+            e.stopPropagation();
+            verifyPassword();
+        });
+        
+        // 按Enter键提交密码
+        passwordModalInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                verifyPassword();
+            }
+        });
+        
+        // 验证密码
+        function verifyPassword() {
+            if (passwordModalInput.value === correctPassword) {
+                // 密码正确，进入开发者模式
+                enterDeveloperMode();
+                closePasswordModal();
+            } else {
+                // 密码错误
+                modalPasswordError.style.display = 'block';
+                passwordModalInput.focus();
+            }
+        }
+        
+        // 进入开发者模式
+        function enterDeveloperMode() {
+            isDeveloperMode = true;
+            developerModeBtn.textContent = '退出开发者模式';
+            developerModeBtn.classList.add('active');
+            developerSection.style.display = 'block';
+            countInput.value = count;
+            // 显示更改密码按钮
+            changePasswordBtn.style.display = 'block';
+        }
+        
+        // 退出开发者模式
+        function exitDeveloperMode() {
+            isDeveloperMode = false;
+            developerModeBtn.textContent = '开发者模式';
+            developerModeBtn.classList.remove('active');
+            developerSection.style.display = 'none';
+            // 隐藏更改密码按钮
+            changePasswordBtn.style.display = 'none';
+        }
+        
+        // 按Enter键保存数字
+        countInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && isDeveloperMode) {
+                saveBtn.click();
+            }
+        });
+        
+        // 加载保存的设置
+        window.addEventListener('load', function() {
+            const savedSettings = localStorage.getItem('counterSettings');
+            if (savedSettings) {
+                try {
+                    const settings = JSON.parse(savedSettings);
+                    
+                    bodyElement.style.backgroundColor = settings.bgColor || '#000000';
+                    counterElement.style.color = settings.textColor || '#ffffff';
+                    bgColorInput.value = settings.bgColor || '#000000';
+                    textColorInput.value = settings.textColor || '#ffffff';
+                    
+                    // 加载保存的计数
+                    if (typeof settings.count === 'number' && settings.count >= 0) {
+                        count = settings.count;
+                        counterElement.textContent = count;
+                    }
+                    
+                    updateCustomPreview(bgCustomPreview, settings.bgColor || '#000000');
+                    updateCustomPreview(textCustomPreview, settings.textColor || '#ffffff');
+                    
+                    bgColorWrappers.forEach(wrapper => {
+                        wrapper.classList.remove('selected');
+                        if (wrapper.getAttribute('data-color') === settings.selectedBgColorType ||
+                            (settings.selectedBgColorType !== 'custom' && wrapper.getAttribute('data-color') === settings.bgColor)) {
+                            wrapper.classList.add('selected');
+                        }
+                    });
+                    
+                    textColorWrappers.forEach(wrapper => {
+                        wrapper.classList.remove('selected');
+                        if (wrapper.getAttribute('data-color') === settings.selectedTextColorType ||
+                            (settings.selectedTextColorType !== 'custom' && wrapper.getAttribute('data-color') === settings.textColor)) {
+                            wrapper.classList.add('selected');
+                        }
+                    });
+                } catch (e) {
+                    console.error('加载保存的设置失败:', e);
+                    localStorage.removeItem('counterSettings');
+                }
+            }
+        });
+    </script>
+</body>
+</html>
+    

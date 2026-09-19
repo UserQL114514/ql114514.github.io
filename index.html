@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-hans">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>曲率QL</title>
+        <link rel="stylesheet" href="./css/style.css">
+    </head>
+    <body>
+        <header>
+            <img src="./img/Logo.jpg" alt="QL Logo" width="70px">
+            <a style="position:absolute;left:100px;top:0;line-height:80px;font-size:30px;" href="./index.html"><strong>QL114514</strong></a>
+            <nav>
+                <ul class="nav-list">
+                    <li><a href="./intro.html">主页简介</a></li>
+                    <li><a href="./music.html">来听歌吧</a></li>
+                    <li><a href="./link.html">其他链接</a></li>
+                    <li><a href="./tips.html">温馨提示</a></li>
+                    <li><a href="./update.html">更新日志</a></li>
+                    <li><a href="./game.html">神秘游戏</a></li>
+                    <li><a href="./blog.html">看看日记</a></li>
+                    <li><a href="./Not-Found.html">[数据删除]</a></li>
+                </ul>
+                <button class="menu-btn">&#9776;</button>
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    const menuBtn = document.querySelector('header button');
+                    const navUl = document.querySelector('header ul');
+                    if(menuBtn && navUl){
+                        menuBtn.addEventListener('click', function () {
+                        navUl.classList.toggle('open');
+                        });
+                    }
+                });
+            </script>
+            </nav>
+        </header>
+        <main>
+            <div class="text">
+                欢迎来到我的小站!很高兴认识你!<br>当前时间:
+                <span id="clock-text"></span><br>本站已创建
+                <span id="site-total_0_0_0"></span><br>本站已启用
+                <span id="site-total_1_0_0"></span><br>你已在本页面
+                <span id="session-time"></span>,
+                <span id="tip-text"></span><br><br>
+                <ul id="btn">
+                <li><a id="intro" href="./intro.html">看看主页</a></li>
+                <li><a id="blog" href="./blog.html">看看日记</a></li>
+                <li><a id="game" href="./game.html">神秘游戏</a></li>
+                </ul>
+            </div>
+            <script>
+                const clockDom = document.getElementById('clock-text');
+                const tipDom = document.getElementById('tip-text');
+                const siteTotalDom_0_0_0 = document.getElementById('site-total_0_0_0');
+                const siteTotalDom_1_0_0 = document.getElementById('site-total_1_0_0');
+                const sessionDom = document.getElementById('session-time');
+                const SITE_DECIMAL = 6;
+                const SESSION_DECIMAL = 3;
+                const WEB_BUILD_DATE_STR_0_0_0 = "2025-12-29";
+                const buildDate_0_0_0 = new Date(WEB_BUILD_DATE_STR_0_0_0);
+                const WEB_BUILD_DATE_STR_1_0_0 = "2026-02-13";
+                const buildDate_1_0_0 = new Date(WEB_BUILD_DATE_STR_1_0_0);
+                const pageOpenTs = Date.now();
+                function getTipBySessionSec(sessionSec){
+                    if(sessionSec < 10) return "欢迎你的来访!(0s)";
+                    if(sessionSec < 30) return "这里是文案!你好呀!(10s)";
+                    if(sessionSec < 60) return "还在找想看的东西吗?(30s)";
+                    if(sessionSec < 90) return "原来你是喜欢我吗,在这里呆这么久(1min)";
+                    if(sessionSec < 180) return "你在和我一起发呆吗?(2min)";
+                    if(sessionSec < 240) return "哇塞!你在这里三分钟了!(3min)";
+                    if(sessionSec < 300) return "你想知道下一次这行字什么时候变化吗?(4min)";
+                    if(sessionSec < 360) return "答案是五分钟!(5min)";
+                    if(sessionSec < 480) return "嘻嘻~~~杂鱼~杂鱼~❤~见到我就走不开了~(6min)";
+                    if(sessionSec < 600) return "后面没有了,相信我(8min)";
+                    if(sessionSec < 900) return "好像有笨蛋忘记关浏览器了(10min)";
+                    if(sessionSec < 1200) return "你住这了?!(15min)";
+                    if(sessionSec < 1800) return "404 Not Found(20min)";
+                    if(sessionSec < 2400) return "......(30min)";
+                    if(sessionSec < 3600) return "你在上课吗?(40min)";
+                    return "为你颁发发呆达人(1hr)";
+                }
+                function formatAutoUnit(ms, digit){
+                    const sec = ms / 1000;
+                    if(sec < 60) return sec.toFixed(digit) + " 秒";
+                    if(sec < 3600) return (sec / 60).toFixed(digit) + " 分";
+                    if(sec < 86400) return (sec / 3600).toFixed(digit) + " 时";
+                    return (sec / 86400).toFixed(digit) + " 天";
+                }
+                function updateTime(){
+                    const now = new Date();
+                    const h = String(now.getHours()).padStart(2,'0');
+                    const m = String(now.getMinutes()).padStart(2,'0');
+                    const s = String(now.getSeconds()).padStart(2,'0');
+                    clockDom.innerText = `${h}:${m}:${s}`;
+                    const sessionMs = Date.now() - pageOpenTs;
+                    const sessionSec = sessionMs / 1000;
+                    tipDom.innerText = getTipBySessionSec(sessionSec);
+                    siteTotalDom_0_0_0.innerText = formatAutoUnit(now.getTime() - buildDate_0_0_0.getTime() + 82980000, SITE_DECIMAL);
+                    siteTotalDom_1_0_0.innerText = formatAutoUnit(now.getTime() - buildDate_1_0_0.getTime() + 73260000, SITE_DECIMAL);
+                    sessionDom.innerText = formatAutoUnit(sessionMs, SESSION_DECIMAL);
+                }
+                updateTime();
+                setInterval(updateTime,1);
+            </script>
+        </main>
+        <footer>
+            <div>
+                <p><strong>联系我</strong></p>
+                <a href="https://space.bilibili.com/3546832162523212">Bilibili</a><br>
+                <a href="https://user.qzone.qq.com/1241469177/main">QQ</a><br>
+                <a href="https://github.com/UserQL114514">Github</a><br>
+            </div>
+            <div>
+                <p><strong>你想找什么</strong></p>
+                <a href="./intro.html">关于</a><br>
+                <a href="./blog.html">日常</a><br>
+                <a href="./game.html">游戏</a><br>
+            </div>
+            <div>
+                <p><strong>友情链接</strong></p>
+                <a href="https://space.bilibili.com/3546929940138875">好友Bilibili</a><br>
+                <a href="https://user.qzone.qq.com/3624565759/main">好友QQ</a><br>
+                <a href="https://space.bilibili.com/3546968097818827">小学同学Bilibili</a><br>
+            </div>
+        </footer>
+        <div style="background:rgb(51,51,51);display:flex;align-items:center;justify-content:center;width:100%;padding:0 0 20px;">
+            <p style="color:#888;">Copyright ©2026 QL114514</p>
+        </div>
+    </body>
+</html>
